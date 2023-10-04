@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Click Counter Game</title>
+     
+    <style>
+        body {
+            text-align: center;
+            font-family: monospace; /* Use monospace font for all text */
+            background-color: #f3f3f3;
+        }
+
+        /* Color Palette */
+        :root {
+            --primary-bg-color: #3498db; /* Primary background color (blue) */
+            --secondary-bg-color: #e74c3c; /* Secondary background color (red) */
+            --text-color: #ffffff; /* Text color (white) */
+        }
+
+        /* Responsive styles */
+        #container {
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            justify-content: center; /* Center vertically */
+            align-items: center; /* Center horizontally */
+        }
+
+        #clickArea {
+            font-size: 24px;
+            border-radius: 10px;
+            user-select: none;
+            transition: background-color 0.2s; /* Smooth transition for background color */
+            cursor: pointer; /* Change cursor on hover */
+            background-color: var(--primary-bg-color); /* Use primary background color */
+            padding: 20px; /* Add padding to make it wider */
+            max-width: 400px;
+            width: 100%;
+        }
+
+        #clickArea:hover {
+            background-color: var(--secondary-bg-color); /* Use secondary background color on hover */
+        }
+
+        #clickArea.clicked {
+            background-color: var(--secondary-bg-color); /* Use secondary background color when clicked */
+        }
+
+        #clickArea.clicked:hover {
+            background-color: var(--secondary-bg-color); /* Maintain secondary background color when clicked and hovered */
+        }
+
+        #clickCount {
+            font-size: 36px;
+            user-select: none; /* Prevent text selection for the score */
+            color: var(--text-color); /* Use text color */
+        }
+
+        #highScore {
+            font-size: 24px;
+            user-select: none; /* Prevent text selection for the high score */
+            color: #333; /* Dark gray text color for high score */
+        }
+
+        #timerText {
+            font-size: 18px;
+            user-select: none; /* Prevent text selection for the timer text */
+            color: var(--text-color); /* Use text color */
+        }
+
+        #buttonContainer {
+            text-align: center;
+            user-select: none;
+        }
+
+        #resetButton {
+            display: none;
+            user-select: none; /* Prevent text selection */
+            background-color: var(--primary-bg-color); /* Use primary background color for the button */
+            color: var(--text-color); /* Use text color for the button */
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            
+        }
+
+        #resetButton:hover {
+            background-color: var(--secondary-bg-color); /* Use secondary background color for the button on hover */
+            user-select: none;
+        }
+
+        @media (max-width: 600px) {
+            /* Adjust styles for smaller screens */
+            #clickArea {
+                font-size: 18px;
+            }
+            #clickCount {
+                font-size: 24px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <h1>Click Click Click</h1>
+    <p>Click as many times as you can in 10 seconds!</p>
+    <div id="container">
+        <div id="clickArea">
+            <p id="timerText">Click to Start</p>
+            <p id="clickCount">0</p>
+        </div>
+        <p id="highScore">High Score: <span id="highScoreValue">0</span></p>
+        <div id="buttonContainer">
+            <button id="resetButton">Restart</button>
+        </div>
+    </div>
+
+    <script>
+        let clickCount = 0;
+        let timeLeft = 10;
+        let timer;
+        let gameStarted = false;
+
+        // Retrieve high score from localStorage or set it to 0 if it doesn't exist
+        let highScore = localStorage.getItem("highScore") || 0;
+        const highScoreDisplay = document.getElementById("highScoreValue");
+        highScoreDisplay.textContent = highScore;
+
+        const clickArea = document.getElementById("clickArea");
+        const clickCountDisplay = document.getElementById("clickCount");
+        const timerText = document.getElementById("timerText");
+        const resetButton = document.getElementById("resetButton");
+
+        function updateClickCount() {
+            if (!gameStarted) {
+                startGame();
+            }
+            clickCount++;
+            clickCountDisplay.textContent = clickCount;
+
+            // Check if the current click count is greater than the high score
+            if (clickCount > highScore) {
+                highScore = clickCount;
+                highScoreDisplay.textContent = highScore;
+                // Store the new high score in localStorage
+                localStorage.setItem("highScore", highScore);
+            }
+        }
+
+        function updateTimer() {
+            timeLeft--;
+            timerText.textContent = timeLeft.toString(); // Display just the time value
+            if (timeLeft === 0) {
+                endGame();
+            }
+        }
+
+        function startGame() {
+            gameStarted = true;
+            timerText.textContent = timeLeft.toString(); // Display just the time value
+            clickArea.removeEventListener("click", startGame);
+            clickArea.addEventListener("click", updateClickCount);
+            timer = setInterval(updateTimer, 1000);
+            clickArea.classList.add("clicked"); // Add the "clicked" class
+        }
+
+        function endGame() {
+            clearInterval(timer);
+            clickArea.removeEventListener("click", updateClickCount);
+            resetButton.style.display = "block";
+            resetButton.addEventListener("click", resetGame);
+            clickArea.classList.remove("clicked"); // Remove the "clicked" class
+        }
+
+        function resetGame() {
+            clickCount = 0;
+            timeLeft = 10;
+            gameStarted = false;
+            clickCountDisplay.textContent = clickCount;
+            timerText.textContent = "Click to Start";
+            resetButton.style.display = "none";
+            clickArea.addEventListener("click", startGame);
+            clickArea.classList.remove("clicked"); // Remove the "clicked" class
+        }
+
+        clickArea.addEventListener("click", startGame);
+    </script>
+</body>
+</html>
