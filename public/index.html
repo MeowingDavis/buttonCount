@@ -1,27 +1,22 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Click Counter Game</title>
-
+     
     <style>
         body {
             text-align: center;
-            font-family: monospace;
-            /* Use monospace font for all text */
+            font-family: monospace; /* Use monospace font for all text */
             background-color: #f3f3f3;
         }
 
         /* Color Palette */
         :root {
-            --primary-bg-color: #3498db;
-            /* Primary background color (blue) */
-            --secondary-bg-color: #e74c3c;
-            /* Secondary background color (red) */
-            --text-color: #ffffff;
-            /* Text color (white) */
+            --primary-bg-color: #3498db; /* Primary background color (blue) */
+            --secondary-bg-color: #e74c3c; /* Secondary background color (red) */
+            --text-color: #ffffff; /* Text color (white) */
         }
 
         /* Responsive styles */
@@ -29,65 +24,50 @@
             position: relative;
             display: flex;
             flex-direction: column;
-            justify-content: center;
-            /* Center vertically */
-            align-items: center;
-            /* Center horizontally */
+            justify-content: center; /* Center vertically */
+            align-items: center; /* Center horizontally */
         }
 
         #clickArea {
             font-size: 24px;
             border-radius: 10px;
             user-select: none;
-            transition: background-color 0.2s;
-            /* Smooth transition for background color */
-            cursor: pointer;
-            /* Change cursor on hover */
-            background-color: var(--primary-bg-color);
-            /* Use primary background color */
-            padding: 20px;
-            /* Add padding to make it wider */
+            transition: background-color 0.2s; /* Smooth transition for background color */
+            cursor: pointer; /* Change cursor on hover */
+            background-color: var(--primary-bg-color); /* Use primary background color */
+            padding: 20px; /* Add padding to make it wider */
             max-width: 400px;
             width: 100%;
         }
 
         #clickArea:hover {
-            background-color: var(--secondary-bg-color);
-            /* Use secondary background color on hover */
+            background-color: var(--secondary-bg-color); /* Use secondary background color on hover */
         }
 
         #clickArea.clicked {
-            background-color: var(--secondary-bg-color);
-            /* Use secondary background color when clicked */
+            background-color: var(--secondary-bg-color); /* Use secondary background color when clicked */
         }
 
         #clickArea.clicked:hover {
-            background-color: var(--secondary-bg-color);
-            /* Maintain secondary background color when clicked and hovered */
+            background-color: var(--secondary-bg-color); /* Maintain secondary background color when clicked and hovered */
         }
 
         #clickCount {
             font-size: 36px;
-            user-select: none;
-            /* Prevent text selection for the score */
-            color: var(--text-color);
-            /* Use text color */
+            user-select: none; /* Prevent text selection for the score */
+            color: var(--text-color); /* Use text color */
         }
 
         #highScore {
             font-size: 24px;
-            user-select: none;
-            /* Prevent text selection for the high score */
-            color: #333;
-            /* Dark gray text color for high score */
+            user-select: none; /* Prevent text selection for the high score */
+            color: #333; /* Dark gray text color for high score */
         }
 
         #timerText {
             font-size: 18px;
-            user-select: none;
-            /* Prevent text selection for the timer text */
-            color: var(--text-color);
-            /* Use text color */
+            user-select: none; /* Prevent text selection for the timer text */
+            color: var(--text-color); /* Use text color */
         }
 
         #buttonContainer {
@@ -97,40 +77,36 @@
 
         #resetButton {
             display: none;
-            user-select: none;
-            /* Prevent text selection */
-            background-color: var(--primary-bg-color);
-            /* Use primary background color for the button */
-            color: var(--text-color);
-            /* Use text color for the button */
+            user-select: none; /* Prevent text selection */
+            background-color: var(--primary-bg-color); /* Use primary background color for the button */
+            color: var(--text-color); /* Use text color for the button */
             padding: 10px 20px;
             border: none;
             border-radius: 5px;
             cursor: pointer;
-
+            
         }
 
         #resetButton:hover {
-            background-color: var(--secondary-bg-color);
-            /* Use secondary background color for the button on hover */
+            background-color: var(--secondary-bg-color); /* Use secondary background color for the button on hover */
             user-select: none;
         }
 
         @media (max-width: 600px) {
-
             /* Adjust styles for smaller screens */
             #clickArea {
                 font-size: 18px;
             }
-
             #clickCount {
                 font-size: 24px;
             }
         }
     </style>
 </head>
-
 <body>
+    <audio id="clickSound" preload="auto">
+        <source src="countDown.wav" type="audio/wav">
+    </audio>
     <h1>Click Click Click</h1>
     <p>Click as many times as you can in 10 seconds!</p>
     <div id="container">
@@ -143,10 +119,6 @@
             <button id="resetButton">Restart</button>
         </div>
     </div>
-    <audio id="clickSound" preload="auto">
-        <source src="countDown.wav" type="audio/wav">
-    </audio>
-
 
     <script>
         let clickCount = 0;
@@ -154,7 +126,6 @@
         let timer;
         let gameStarted = false;
 
-        // Retrieve high score from localStorage or set it to 0 if it doesn't exist
         let highScore = localStorage.getItem("highScore") || 0;
         const highScoreDisplay = document.getElementById("highScoreValue");
         highScoreDisplay.textContent = highScore;
@@ -163,6 +134,7 @@
         const clickCountDisplay = document.getElementById("clickCount");
         const timerText = document.getElementById("timerText");
         const resetButton = document.getElementById("resetButton");
+        const clickSound = document.getElementById("clickSound");
 
         function updateClickCount() {
             if (!gameStarted) {
@@ -171,48 +143,52 @@
             clickCount++;
             clickCountDisplay.textContent = clickCount;
 
-            // Check if the current click count is greater than the high score
+            if (clickCount === 1) {
+                playClickSound();
+            }
+
             if (clickCount > highScore) {
                 highScore = clickCount;
                 highScoreDisplay.textContent = highScore;
-                // Store the new high score in localStorage
                 localStorage.setItem("highScore", highScore);
             }
         }
 
         function updateTimer() {
             timeLeft--;
-            timerText.textContent = timeLeft.toString(); // Display just the time value
+            timerText.textContent = timeLeft.toString();
             if (timeLeft === 0) {
                 endGame();
             }
         }
 
-        const clickSound = document.getElementById("clickSound");
-
         function startGame() {
             gameStarted = true;
-            timerText.textContent = timeLeft.toString(); // Display just the time value
+            timerText.textContent = timeLeft.toString();
             clickArea.removeEventListener("click", startGame);
-            clickArea.addEventListener("click", function () {
-                updateClickCount();
-                clickSound.play(); // Play the click sound
-            });
+            clickArea.addEventListener("click", updateClickCount);
             timer = setInterval(updateTimer, 1000);
-            clickArea.classList.add("clicked"); // Add the "clicked" class
+            clickArea.classList.add("clicked");
         }
-
 
         function endGame() {
             clearInterval(timer);
             clickArea.removeEventListener("click", updateClickCount);
             resetButton.style.display = "block";
             resetButton.addEventListener("click", resetGame);
-            clickArea.classList.remove("clicked"); // Remove the "clicked" class
-            clickSound.pause(); // Pause the click sound
-            clickSound.currentTime = 0; // Reset the sound to the beginning
+            clickArea.classList.remove("clicked");
+            stopClickSound();
         }
 
+        function playClickSound() {
+            clickSound.currentTime = 0;
+            clickSound.play();
+        }
+
+        function stopClickSound() {
+            clickSound.pause();
+            clickSound.currentTime = 0;
+        }
 
         function resetGame() {
             clickCount = 0;
@@ -222,11 +198,10 @@
             timerText.textContent = "Click to Start";
             resetButton.style.display = "none";
             clickArea.addEventListener("click", startGame);
-            clickArea.classList.remove("clicked"); // Remove the "clicked" class
+            clickArea.classList.remove("clicked");
         }
 
         clickArea.addEventListener("click", startGame);
     </script>
 </body>
-
 </html>
