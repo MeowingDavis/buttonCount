@@ -9,8 +9,27 @@
         body {
             text-align: center;
             font-family: monospace; /* Use monospace font for all text */
-            background-color: #f3f3f3;
-        }
+            background-color: #dcc13cc9;
+  animation: morphBackground 30s infinite;
+}
+
+@keyframes morphBackground {
+  0% {
+    background-color: #95917dc9;
+  }
+  25% {
+    background-color: #accadf;
+  }
+  50% {
+    background-color: #6af847b7;
+  }
+  75% {
+    background-color: #3498db;
+  }
+  100% {
+    background-color: #dcc13cc9;
+  }
+}
 
         /* Color Palette */
         :root {
@@ -38,6 +57,7 @@
             padding: 20px; /* Add padding to make it wider */
             max-width: 400px;
             width: 100%;
+            box-shadow: 0 0 10px #333;
         }
 
         #clickArea:hover {
