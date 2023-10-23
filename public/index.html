@@ -3,14 +3,13 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Click Counter Game</title>
 
     <style>
         body {
             text-align: center;
             font-family: monospace;
-            /* Use monospace font for all text */
             background-color: #dcc13cc9;
             animation: morphBackground 30s infinite forwards;
             user-select: none;
@@ -38,14 +37,11 @@
             }
         }
 
-        /* Color Palette */
+        /* Define custom properties before using them */
         :root {
             --primary-bg-color: #3498db;
-            /* Primary background color (blue) */
             --secondary-bg-color: #e74c3c;
-            /* Secondary background color (red) */
             --text-color: #ffffff;
-            /* Text color (white) */
         }
 
         /* Responsive styles */
@@ -54,64 +50,52 @@
             display: flex;
             flex-direction: column;
             justify-content: center;
-            /* Center vertically */
             align-items: center;
-            /* Center horizontally */
         }
 
         #clickArea {
-    font-size: 24px;
-    border-radius: 10px;
-    user-select: none;
-    transition: background-color 0.2s;
-    cursor: pointer;
-    background-color: var(--primary-bg-color);
-    padding: 50px; /* Increase the padding to make it a bigger square */
-    max-width: 600px;
-    max-height: 700px;
-    width: 100%;
-    height: 100%;
-    box-shadow: 0 0 10px #3f3f3f95;
-}
-
+            font-size: 24px;
+            border-radius: 10px;
+            user-select: none;
+            transition: background-color 0.2s;
+            cursor: pointer;
+            background-color: var(--primary-bg-color);
+            padding: 50px;
+            max-width: 600px;
+            max-height: 700px;
+            width: 100%;
+            height: 100%;
+            box-shadow: 0 0 10px #3f3f3f95;
+        }
 
         #clickArea:hover {
             background-color: var(--secondary-bg-color);
-            /* Use secondary background color on hover */
         }
 
         #clickArea.clicked {
             background-color: var(--secondary-bg-color);
-            /* Use secondary background color when clicked */
         }
 
         #clickArea.clicked:hover {
             background-color: var(--secondary-bg-color);
-            /* Maintain secondary background color when clicked and hovered */
         }
 
         #clickCount {
             font-size: 36px;
             user-select: none;
-            /* Prevent text selection for the score */
             color: var(--text-color);
-            /* Use text color */
         }
 
         #highScore {
             font-size: 24px;
             user-select: none;
-            /* Prevent text selection for the high score */
             color: #333;
-            /* Dark gray text color for high score */
         }
 
         #timerText {
             font-size: 18px;
             user-select: none;
-            /* Prevent text selection for the timer text */
             color: var(--text-color);
-            /* Use text color */
         }
 
         #buttonContainer {
@@ -119,30 +103,39 @@
             user-select: none;
         }
 
-        #resetButton {
-            display: none;
-            user-select: none;
-            /* Prevent text selection */
+        #profileButton {
+
+            font-family: monospace;
             background-color: var(--primary-bg-color);
-            /* Use primary background color for the button */
             color: var(--text-color);
-            /* Use text color for the button */
             padding: 10px 20px;
             border: none;
             border-radius: 5px;
             cursor: pointer;
-
         }
+
+        #profileButton:hover {
+            background-color: var(--secondary-bg-color);
+        }
+
+        #resetButton {
+            display: none;
+            user-select: none;
+            background-color: var(--primary-bg-color);
+            color: var(--text-color);
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
 
         #resetButton:hover {
             background-color: var(--secondary-bg-color);
-            /* Use secondary background color for the button on hover */
-            user-select: none;
         }
 
-        @media (max-width: 600px) {
 
-            /* Adjust styles for smaller screens */
+        @media (max-width: 600px) {
             #clickArea {
                 font-size: 18px;
             }
@@ -150,16 +143,6 @@
             #clickCount {
                 font-size: 24px;
             }
-
-            #clickArea::before {
-
-                color: #ffffff;
-                font-size: 18px;
-                display: block;
-                margin-bottom: 10px;
-            }
-
-
         }
     </style>
 </head>
@@ -263,6 +246,20 @@
         }
 
         clickArea.addEventListener("click", startGame);
+    </script>
+
+
+
+
+    <button id="profileButton">Porfolio</button>
+
+
+    <script>
+        const externalLinkButton = document.getElementById("profileButton");
+
+        externalLinkButton.addEventListener("click", function () {
+            window.open("https://davislang.deno.dev", "_blank");
+        });
     </script>
 </body>
 
