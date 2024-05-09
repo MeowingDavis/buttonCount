@@ -1,14 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Click Counter Game</title>
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1248945871137352"
-     crossorigin="anonymous"></script>
-
-    <style>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Test your clicking speed with this fun click counter game. Click as many times as you can in 10 seconds!">
+    <title>Click Counter Game - Test Your Clicking Speed</title>
+    <link rel="canonical" href="https://www.yourwebsite.com/click-counter-game">
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1248945871137352" crossorigin="anonymous"></script>
+    <<style>
         body {
             text-align: center;
             font-family: monospace;
@@ -149,11 +148,8 @@
         }
     </style>
 </head>
-
+</head>
 <body>
-    <audio id="clickSound" preload="auto">
-        <source src="countDown.wav" type="audio/wav">
-    </audio>
     <h1>Click Click Click</h1>
     <p>Click as many times as you can in 10 seconds!</p>
     <div id="container">
@@ -166,7 +162,6 @@
             <button id="resetButton">Restart</button>
         </div>
     </div>
-
     <script>
         let clickCount = 0;
         let timeLeft = 10;
@@ -181,7 +176,6 @@
         const clickCountDisplay = document.getElementById("clickCount");
         const timerText = document.getElementById("timerText");
         const resetButton = document.getElementById("resetButton");
-        const clickSound = document.getElementById("clickSound");
 
         function updateClickCount() {
             if (!gameStarted) {
@@ -224,17 +218,14 @@
             resetButton.style.display = "block";
             resetButton.addEventListener("click", resetGame);
             clickArea.classList.remove("clicked");
-            stopClickSound();
         }
 
         function playClickSound() {
-            clickSound.currentTime = 0;
-            clickSound.play();
+            // Implement your play sound functionality here
         }
 
         function stopClickSound() {
-            clickSound.pause();
-            clickSound.currentTime = 0;
+            // Implement your stop sound functionality here
         }
 
         function resetGame() {
@@ -250,17 +241,9 @@
 
         clickArea.addEventListener("click", startGame);
     </script>
-
     <div id="buttonContainer">
-
-
-
-       
-
+        <!-- Any additional content -->
     </div>
-
-
-
+    <img src="countDown.wav" alt="Click Counter Game">
 </body>
-
 </html>
