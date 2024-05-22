@@ -7,147 +7,9 @@
     <meta name="google-adsense-account" content="ca-pub-1248945871137352">
     <title>Click Counter Game - Test Your Clicking Speed</title>
     <link rel="canonical" href="https://www.yourwebsite.com/click-counter-game">
+    <link rel="stylesheet" href="./style.css">
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1248945871137352" crossorigin="anonymous"></script>
-    <style>
-        body {
-            text-align: center;
-            font-family: monospace;
-            background-color: #dcc13cc9;
-            animation: morphBackground 30s infinite forwards;
-            user-select: none;
-        }
-
-        @keyframes morphBackground {
-            0% {
-                background-color: #95917dc9;
-            }
-
-            25% {
-                background-color: #accadf;
-            }
-
-            50% {
-                background-color: #6af847b7;
-            }
-
-            75% {
-                background-color: #3498db;
-            }
-
-            100% {
-                background-color: #dcc13cc9;
-            }
-        }
-
-        
-        :root {
-            --primary-bg-color: #3498db;
-            --secondary-bg-color: #e74c3c;
-            --text-color: #ffffff;
-        }
-
-   
-        #container {
-            position: relative;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-        }
-
-        #clickArea {
-            font-size: 24px;
-            border-radius: 10px;
-            user-select: none;
-            transition: background-color 0.2s;
-            cursor: pointer;
-            background-color: var(--primary-bg-color);
-            padding: 50px;
-            max-width: 600px;
-            max-height: 700px;
-            width: 100%;
-            height: 100%;
-            box-shadow: 0 0 10px #3f3f3f95;
-        }
-
-        #clickArea:hover {
-            background-color: var(--secondary-bg-color);
-        }
-
-        #clickArea.clicked {
-            background-color: var(--secondary-bg-color);
-        }
-
-        #clickArea.clicked:hover {
-            background-color: var(--secondary-bg-color);
-        }
-
-        #clickCount {
-            font-size: 36px;
-            user-select: none;
-            color: var(--text-color);
-        }
-
-        #highScore {
-            font-size: 24px;
-            user-select: none;
-            color: #333;
-        }
-
-        #timerText {
-            font-size: 18px;
-            user-select: none;
-            color: var(--text-color);
-        }
-
-        #buttonContainer {
-            text-align: center;
-            user-select: none;
-        }
-
-        #profileButton {
-
-            font-family: monospace;
-            background-color: var(--primary-bg-color);
-            color: var(--text-color);
-            padding: 10px 20px;
-            margin: 30px;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-        }
-
-        #profileButton:hover {
-            background-color: var(--secondary-bg-color);
-        }
-
-        #resetButton {
-            display: none;
-            user-select: none;
-            background-color: var(--primary-bg-color);
-            color: var(--text-color);
-            padding: 10px 20px;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-        }
-
-
-        #resetButton:hover {
-            background-color: var(--secondary-bg-color);
-        }
-
-
-        @media (max-width: 600px) {
-            #clickArea {
-                font-size: 18px;
-            }
-
-            #clickCount {
-                font-size: 24px;
-            }
-        }
-    </style>
+    
 </head>
 </head>
 <body>
@@ -163,81 +25,13 @@
             <button id="resetButton">Restart</button>
         </div>
     </div>
-    <script>
-        let clickCount = 0;
-        let timeLeft = 10;
-        let timer;
-        let gameStarted = false;
-
-        let highScore = localStorage.getItem("highScore") || 0;
-        const highScoreDisplay = document.getElementById("highScoreValue");
-        highScoreDisplay.textContent = highScore;
-
-        const clickArea = document.getElementById("clickArea");
-        const clickCountDisplay = document.getElementById("clickCount");
-        const timerText = document.getElementById("timerText");
-        const resetButton = document.getElementById("resetButton");
-
-        function updateClickCount() {
-            if (!gameStarted) {
-                startGame();
-            }
-            clickCount++;
-            clickCountDisplay.textContent = clickCount;
-
-            if (clickCount === 1) {
-                playClickSound();
-            }
-
-            if (clickCount > highScore) {
-                highScore = clickCount;
-                highScoreDisplay.textContent = highScore;
-                localStorage.setItem("highScore", highScore);
-            }
-        }
-
-        function updateTimer() {
-            timeLeft--;
-            timerText.textContent = timeLeft.toString();
-            if (timeLeft === 0) {
-                endGame();
-            }
-        }
-
-        function startGame() {
-            gameStarted = true;
-            timerText.textContent = timeLeft.toString();
-            clickArea.removeEventListener("click", startGame);
-            clickArea.addEventListener("click", updateClickCount);
-            timer = setInterval(updateTimer, 1000);
-            clickArea.classList.add("clicked");
-        }
-
-        function endGame() {
-            clearInterval(timer);
-            clickArea.removeEventListener("click", updateClickCount);
-            resetButton.style.display = "block";
-            resetButton.addEventListener("click", resetGame);
-            clickArea.classList.remove("clicked");
-        }
-
-      
-        function resetGame() {
-            clickCount = 0;
-            timeLeft = 10;
-            gameStarted = false;
-            clickCountDisplay.textContent = clickCount;
-            timerText.textContent = "Click to Start";
-            resetButton.style.display = "none";
-            clickArea.addEventListener("click", startGame);
-            clickArea.classList.remove("clicked");
-        }
-
-        clickArea.addEventListener("click", startGame);
-    </script>
+ 
     <div id="buttonContainer">
+
+    
        
     </div>
     
+    <script src="./script.js"></script>
 </body>
 </html>
