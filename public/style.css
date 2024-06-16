@@ -4,6 +4,9 @@ body {
     background-color: #dcc13cc9;
     animation: morphBackground 30s infinite forwards;
     user-select: none;
+    -webkit-user-select: none; /* Safari */
+    -moz-user-select: none; /* Firefox */
+    -ms-user-select: none; /* Internet Explorer/Edge */
 }
 
 @keyframes morphBackground {
@@ -28,13 +31,11 @@ body {
     }
 }
 
-
 :root {
     --primary-bg-color: #3498db;
     --secondary-bg-color: #e74c3c;
     --text-color: #ffffff;
 }
-
 
 #container {
     position: relative;
@@ -42,12 +43,19 @@ body {
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    user-select: none;
+    -webkit-user-select: none; /* Safari */
+    -moz-user-select: none; /* Firefox */
+    -ms-user-select: none; /* Internet Explorer/Edge */
 }
 
 #clickArea {
     font-size: 24px;
     border-radius: 10px;
     user-select: none;
+    -webkit-user-select: none; /* Safari */
+    -moz-user-select: none; /* Firefox */
+    -ms-user-select: none; /* Internet Explorer/Edge */
     transition: background-color 0.2s;
     cursor: pointer;
     background-color: var(--primary-bg-color);
@@ -74,28 +82,39 @@ body {
 #clickCount {
     font-size: 36px;
     user-select: none;
+    -webkit-user-select: none; /* Safari */
+    -moz-user-select: none; /* Firefox */
+    -ms-user-select: none; /* Internet Explorer/Edge */
     color: var(--text-color);
 }
 
 #highScore {
     font-size: 24px;
     user-select: none;
+    -webkit-user-select: none; /* Safari */
+    -moz-user-select: none; /* Firefox */
+    -ms-user-select: none; /* Internet Explorer/Edge */
     color: #333;
 }
 
 #timerText {
     font-size: 18px;
     user-select: none;
+    -webkit-user-select: none; /* Safari */
+    -moz-user-select: none; /* Firefox */
+    -ms-user-select: none; /* Internet Explorer/Edge */
     color: var(--text-color);
 }
 
 #buttonContainer {
     text-align: center;
     user-select: none;
+    -webkit-user-select: none; /* Safari */
+    -moz-user-select: none; /* Firefox */
+    -ms-user-select: none; /* Internet Explorer/Edge */
 }
 
 #profileButton {
-
     font-family: monospace;
     background-color: var(--primary-bg-color);
     color: var(--text-color);
@@ -104,6 +123,10 @@ body {
     border: none;
     border-radius: 5px;
     cursor: pointer;
+    user-select: none;
+    -webkit-user-select: none; /* Safari */
+    -moz-user-select: none; /* Firefox */
+    -ms-user-select: none; /* Internet Explorer/Edge */
 }
 
 #profileButton:hover {
@@ -113,6 +136,9 @@ body {
 #resetButton {
     display: none;
     user-select: none;
+    -webkit-user-select: none; /* Safari */
+    -moz-user-select: none; /* Firefox */
+    -ms-user-select: none; /* Internet Explorer/Edge */
     background-color: var(--primary-bg-color);
     color: var(--text-color);
     padding: 10px 20px;
@@ -121,11 +147,9 @@ body {
     cursor: pointer;
 }
 
-
 #resetButton:hover {
     background-color: var(--secondary-bg-color);
 }
-
 
 @media (max-width: 600px) {
     #clickArea {
